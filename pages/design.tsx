@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Button from '@theme/components/Button';
 import { LinkButton } from '@theme/components/Button/LinkButton';
+import Card from '@theme/components/Card';
 import Grid from '@theme/components/Grid';
 import {
   ArrowIcon,
@@ -54,6 +55,13 @@ const Label = styled('p')`
   margin-bottom: 8px;
 `;
 
+/**
+ * 
+ *  rgb(145 199 255) 25%,
+    gb(210 240 255) 75%
+ * 
+ */
+
 export default function Design(props: {
   tweets: Record<string, TransformedTweet>;
 }) {
@@ -78,6 +86,150 @@ export default function Design(props: {
           <h1>Components / Design System</h1>
           <HR />
         </div>
+        <section>
+          <h2>Card</h2>
+          <Grid rowGap={30}>
+            <Card
+              css={css`
+                margin-top: 150px;
+                margin-bottom: 150px;
+                background-image: linear-gradient(
+                  135deg,
+                  rgb(88 154 253) rgb(188 236 255)
+                );
+                max-width: 250px;
+                height: 250px;
+                position: relative;
+                overflow: hidden;
+                user-select: none;
+              `}
+            >
+              <div
+                css={css`
+                  height: 100%;
+                  left: 0;
+                  position: absolute;
+                  top: 0;
+                  transform-origin: center center;
+                  width: 100%;
+
+                  animation: rotateGradient 10s infinite;
+
+                  @media (prefers-reduced-motion) {
+                    display: none;
+                    animation: none;
+                  }
+
+                  @keyframes rotateGradient {
+                    0% {
+                      transform: rotate(0deg);
+                    }
+                    50% {
+                      transform: rotate(135deg);
+                    }
+                    100% {
+                      transform: rotate(0deg);
+                    }
+                  }
+                `}
+              >
+                <div
+                  css={css`
+                    background-image: linear-gradient(
+                      135deg,
+                      rgb(88 154 253) 35%,
+                      rgb(188 236 255) 65%
+                    );
+                    transform: scale(1.5, 3);
+                    height: 100%;
+                    left: 0;
+                    position: absolute;
+                    top: 0;
+                    transform-origin: center center;
+                    width: 100%;
+                  `}
+                />
+              </div>
+              <Card.Body>
+                <div
+                  css={css`
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                  `}
+                >
+                  <div>
+                    <p
+                      css={css`
+                        color: rgba(0, 0, 0, 0.4);
+                        font-size: 32px;
+                        margin-bottom: 0px;
+                        line-height: 1rem;
+                      `}
+                    >
+                      <span
+                        css={css`
+                          margin-left: -8px;
+                          color: rgba(0, 0, 0, 0.4);
+                          font-size: 112px;
+                          font-weight: 500;
+                        `}
+                      >
+                        99
+                      </span>
+                      %
+                    </p>
+                    <p
+                      css={css`
+                        color: rgba(0, 0, 0, 0.4);
+                        margin-bottom: 0px;
+                      `}
+                    >
+                      Blood Oxygen
+                    </p>
+                  </div>
+                </div>
+              </Card.Body>
+            </Card>
+
+            <Card>
+              <Card.Body>Basic Card</Card.Body>
+            </Card>
+
+            <Card title="Title for the card">
+              <Card.Body>Card with Title</Card.Body>
+            </Card>
+
+            <Card>
+              <Card.Header>Some Custom Header</Card.Header>
+              <Card.Body>Card With Custom Header</Card.Body>
+            </Card>
+
+            <Card>
+              <div
+                css={css`
+                  padding: 40px;
+                `}
+              >
+                Card With custom Body
+              </div>
+            </Card>
+            <Card level={0}>
+              <Card.Body>Basic Card level 0</Card.Body>
+            </Card>
+            <Card level={1}>
+              <Card.Body>Basic Card level 1</Card.Body>
+            </Card>
+            <Card level={2}>
+              <Card.Body>Basic Card level 2</Card.Body>
+            </Card>
+
+            <Card level={3}>
+              <Card.Body>Basic Card level 3</Card.Body>
+            </Card>
+          </Grid>
+        </section>
         <section id="logo">
           <h2>Logo</h2>
           <Logo />
