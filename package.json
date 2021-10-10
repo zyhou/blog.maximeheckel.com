@@ -32,6 +32,7 @@
     "@emotion/react": "11.1.4",
     "@emotion/server": "11.0.0",
     "@emotion/styled": "11.0.0",
+    "@stitches/react": "^1.2.5",
     "@visx/clip-path": "1.6.1",
     "@visx/curve": "1.6.1",
     "@visx/event": "1.6.1",

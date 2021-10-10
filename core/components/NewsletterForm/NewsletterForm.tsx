@@ -151,7 +151,6 @@ const NewsletterForm = (props: Props) => {
               <Button
                 aria-label="Subscribe to my newsletter"
                 disabled={isLoading}
-                glow={!isChecked && !isLoading}
                 title="Subscribe to my newsletter"
                 type="submit"
                 variant="primary"

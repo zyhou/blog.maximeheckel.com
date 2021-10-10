@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { css } from '@emotion/react';
-import styled from '@emotion/styled';
+import { styled } from '@stitches/react';
 import { format } from 'date-fns';
 import { motion, MotionProps } from 'framer-motion';
 import dynamic from 'next/dynamic';
@@ -87,9 +87,9 @@ const IndexPage = (props: Props) => {
           <h1>
             Hi <WavingHand /> I'm Maxime, and this is my blog.{' '}
             <span
-              css={css`
-                color: var(--maximeheckel-colors-typeface-secondary);
-              `}
+              style={{
+                color: 'var(--maximeheckel-colors-typeface-secondary)',
+              }}
             >
               Here, I share through my writing my experience as a frontend
               engineer and everything I'm learning about on React, Typescript,
@@ -97,7 +97,7 @@ const IndexPage = (props: Props) => {
             </span>
           </h1>
           <Flex
-            gap={8}
+            gap={12}
             css={css`
               margin-left: -12px;
               margin-right: -12px;
@@ -136,17 +136,18 @@ const IndexPage = (props: Props) => {
         </section>
         <section>
           <h2>Featured</h2>
-          <List as="ul" data-testid="featured-list" rowGap={16}>
+          <List as="ul" data-testid="featured-list">
             {posts
               .filter((post) => post.featured)
               .map((post) => {
                 return (
                   <motion.li
-                    css={css`
-                      position: relative;
-                      margin-left: -8px;
-                      margin-right: -8px;
-                    `}
+                    style={{
+                      listStyle: 'none',
+                      position: 'relative',
+                      marginLeft: '-8px',
+                      marginRight: '-8px',
+                    }}
                     key={post.slug}
                     data-testid="featured-article-item"
                     initial="initial"
@@ -160,9 +161,9 @@ const IndexPage = (props: Props) => {
                         `}
                       >
                         <Glow
-                          css={css`
-                            background: ${post.colorFeatured};
-                          `}
+                          css={{
+                            background: post.colorFeatured,
+                          }}
                           variants={glowVariants}
                           transition={{
                             type: 'tween',
@@ -198,7 +199,12 @@ const IndexPage = (props: Props) => {
                         >
                           <Card.Body>
                             <TitleWithBackground
-                              background={post.colorFeatured!}
+                              css={{
+                                background: post.colorFeatured!,
+                                '-webkit-background-clip': 'text',
+                                '-moz-background-clip': 'text',
+                                backgroundClip: 'text',
+                              }}
                             >
                               {post.title}
                             </TitleWithBackground>
@@ -220,7 +226,7 @@ const IndexPage = (props: Props) => {
         </section>
         <section>
           <h2>All articles</h2>
-          <List as="ul" data-testid="article-list" rowGap={4}>
+          <List as="ul" data-testid="article-list">
             {posts.map((post) => {
               const currentYear = new Date(post.date).getFullYear();
               let printYear;
@@ -233,7 +239,14 @@ const IndexPage = (props: Props) => {
               }
 
               return (
-                <li key={post.slug} data-testid="article-item">
+                <li
+                  style={{
+                    listStyle: 'none',
+                    cursor: 'pointer',
+                  }}
+                  key={post.slug}
+                  data-testid="article-item"
+                >
                   {printYear ? <YearBlock>{currentYear}</YearBlock> : null}
                   <Link href={`/posts/${post.slug}/`}>
                     <a
@@ -274,84 +287,78 @@ export async function getStaticProps() {
   return { props: { posts } };
 }
 
-const Glow = styled(motion.div)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  -webkit-filter: blur(15px);
-  filter: blur(15px);
-  border-radius: var(--border-radius-2);
-`;
+const Glow = styled(motion.div, {
+  position: 'absolute',
+  top: '0',
+  left: '0',
+  width: '100%',
+  height: '100%',
+  WebkitFilter: 'blur(15px)',
+  filter: 'blur(15px)',
+  borderRadius: 'var(--border-radius-2)',
+});
 
-const TitleWithBackground = styled('h2')<{ background: string }>`
-  color: var(--maximeheckel-colors-typeface-primary);
-  margin-bottom: 0px !important;
-  letter-spacing: -0.02em;
-  margin-block-end: 0px;
-  background: ${(p) => p.background};
-  background-clip: text;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-`;
+const TitleWithBackground = styled('h2', {
+  color: 'var(--maximeheckel-colors-typeface-primary)',
+  marginBottom: '0px !important',
+  letterSpacing: '-0.02em',
+  marginBlockEnd: '0px',
+  WebkitTextFillColor: 'transparent',
+  MozTextFillColor: 'transparent',
+});
 
-const Block = styled('div')`
-  @media (max-width: 700px) {
-    height: 100px;
-  }
+const Block = styled('div', {
+  '@media (max-width: 700px)': {
+    height: '100px',
+  },
 
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding-left: 10px;
-  border-radius: var(--border-radius-2);
-  margin-left: -10px;
+  display: 'flex',
+  justifyContent: 'flex-start',
+  alignItems: 'center',
+  paddingLeft: '10px',
+  borderRadius: 'var(--border-radius-2)',
+  marginLeft: '-10px',
+  height: '60px',
+  boxShadow: 'none',
+  color: 'var(--maximeheckel-colors-typeface-primary)',
+  transition: 'background-color 0.25s, box-shadow 0.25s, color 0.25s',
 
-  height: 60px;
-  box-shadow: none;
+  '&:hover': {
+    backgroundColor: 'var(--maximeheckel-colors-foreground)',
+    boxShadow: 'var(--maximeheckel-shadow-1)',
+    color: 'var(--maximeheckel-colors-brand)',
+  },
+});
 
-  color: var(--maximeheckel-colors-typeface-primary);
-  transition: background-color 0.25s, box-shadow 0.25s, color 0.25s;
+const YearBlock = styled('div', {
+  padding: '30px 0px',
+  fontWeight: '600',
+});
 
-  &:hover {
-    background-color: var(--maximeheckel-colors-foreground);
-    box-shadow: var(--maximeheckel-shadow-1);
-    color: var(--maximeheckel-colors-brand);
-  }
-`;
+const DateBlock = styled('div', {
+  fontSize: '14px',
+  fontWeight: '500',
+  color: 'var(--maximeheckel-colors-typeface-tertiary)',
+  minWidth: '50px',
+  marginRight: '32px',
+});
 
-const YearBlock = styled('div')`
-  padding: 30px 0px;
-  font-weight: 600;
-`;
+const TitleBlock = styled('div', {
+  fontWeight: '500',
+});
 
-const DateBlock = styled('div')`
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--maximeheckel-colors-typeface-tertiary);
-  min-width: 50px;
-  margin-right: 32px;
-`;
+const List = styled(Grid, {
+  marginLeft: '0px',
+  marginBottom: '0px',
 
-const TitleBlock = styled('div')`
-  font-weight: 500;
-`;
+  '&li': {
+    listStyle: 'none',
+    cursor: 'pointer',
+  },
 
-const List = styled(Grid)`
-  margin-left: 0px;
-  margin-bottom: 0px;
-
-  li {
-    list-style: none;
-    cursor: pointer;
-  }
-
-  h3 {
-    color: var(--maximeheckel-colors-typeface-primary);
-  }
-`;
+  '&h3': {
+    color: 'var(--maximeheckel-colors-typeface-primary)',
+  },
+});
 
 export default IndexPage;
