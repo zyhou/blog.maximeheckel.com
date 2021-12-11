@@ -27,4 +27,5 @@ export interface HighlightedCodeTextProps {
   codeString: string;
   language: Language;
   highlightLine?: (index: number) => boolean;
+  highlightStyle: 'opacity' | 'highlight';
 }

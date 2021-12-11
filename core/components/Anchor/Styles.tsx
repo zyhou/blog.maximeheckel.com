@@ -20,7 +20,7 @@ export const StyledAnchor = styled('a', {
   '@media (hover: hover) and (pointer: fine)': {
     '&:hover': {
       '--color': 'var(--hover-color, var(--maximeheckel-colors-brand))',
-      ' --hover-translation-distance': 'var(--arrow-translation, 0)',
+      '--hover-translation-distance': 'var(--arrow-translation, 0)',
     },
   },
 

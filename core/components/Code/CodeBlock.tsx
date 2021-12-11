@@ -14,7 +14,7 @@ import { calculateLinesToHighlight, hasTitle } from './utils';
 require('prismjs/components/prism-swift');
 
 export const HighlightedCodeText = (props: HighlightedCodeTextProps) => {
-  const { codeString, language, highlightLine } = props;
+  const { codeString, language, highlightLine, highlightStyle } = props;
 
   return (
     <Highlight
@@ -27,8 +27,11 @@ export const HighlightedCodeText = (props: HighlightedCodeTextProps) => {
         <Pre className={className} style={style}>
           {tokens.map((line, index) => {
             const { className: lineClassName } = getLineProps({
-              className:
-                highlightLine && highlightLine(index) ? 'highlight-line' : '',
+              className: highlightLine
+                ? highlightLine(index)
+                  ? 'highlight-line'
+                  : 'basic'
+                : '',
               key: index,
               line,
             });
@@ -42,6 +45,7 @@ export const HighlightedCodeText = (props: HighlightedCodeTextProps) => {
                 }
                 key={index}
                 className={lineClassName}
+                highlightStyle={highlightStyle}
               >
                 <LineNo data-testid="number-line">{index + 1}</LineNo>
                 <LineContent>
@@ -110,6 +114,7 @@ const CodeBlock = (props: CodeBlockProps) => {
         codeString={codeString}
         language={language}
         highlightLine={highlightLineFn}
+        highlightStyle="highlight"
       />
     </Card>
   );
@@ -125,7 +130,7 @@ const Pre = styled('pre', {
   overflow: 'auto',
   borderBottomLeftRadius: 'var(--border-radius-2)',
   borderBottomRightRadius: 'var(--border-radius-2)',
-  backgroundColor: 'var(--code-snippet-background)',
+  // backgroundColor: 'var(--code-snippet-background)',
   fontFamily: 'var(--font-mono)',
   fontSize: 'var(--font-size-1)',
   lineHeight: '26px',
@@ -137,13 +142,28 @@ const Line = styled('div', {
   padding: '0px 14px',
   borderLeft: '3px solid transparent',
 
-  '&.highlight-line': {
-    background: 'var(--maximeheckel-colors-emphasis)',
-    borderColor: 'var(--maximeheckel-colors-brand)',
-  },
-
   '&:hover': {
     backgroundColor: 'var(--maximeheckel-colors-emphasis)',
+  },
+
+  variants: {
+    highlightStyle: {
+      opacity: {
+        '&.basic': {
+          opacity: '0.5',
+        },
+
+        '&.highlight-line': {
+          opacity: '1',
+        },
+      },
+      highlight: {
+        '&.highlight-line': {
+          background: 'var(--maximeheckel-colors-emphasis)',
+          borderColor: 'var(--maximeheckel-colors-brand)',
+        },
+      },
+    },
   },
 });
 

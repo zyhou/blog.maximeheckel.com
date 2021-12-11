@@ -48,9 +48,11 @@ const CubicBezierVisualizer = dynamic(
   () => import('./Widgets/CubicBezierVisualizer')
 );
 const BezierCurve = dynamic(() => import('./Widgets/BezierCurve'));
+const Callstack = dynamic(() => import('./Widgets/Callstack'));
 
 const customComponents = {
   AnimationTypes,
+  Callstack,
   ClipboardAnimationDetails,
   HSLAShowcase,
   Orchestration,
